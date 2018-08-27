@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Extract Text From Tweet</string>
+    <string name="action_settings">Settings</string>
+    <string name="tweetId">Enter tweet id</string>
+    <string name="submit">Submit</string>
+    <string name="tweetInputFieldHint">String must be a long</string>
+    <string name="explainer">Enter a tweet id and choose the type of processing to perform on images associated to the tweet</string>
+
+    <string-array name="textRecognizerTypes">
+        <item>Document</item>
+        <item>Image</item>
+    </string-array>
+</resources>
