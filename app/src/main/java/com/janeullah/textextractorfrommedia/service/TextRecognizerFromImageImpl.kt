@@ -1,6 +1,7 @@
 package com.janeullah.textextractorfrommedia.service
 
 import android.graphics.Bitmap
+import android.os.Looper
 import android.util.Log
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
@@ -15,12 +16,14 @@ class TextRecognizerFromImageImpl : TextRecognizable {
         val textRecognizer = FirebaseVision.getInstance().onDeviceTextRecognizer
         textRecognizer.processImage(mediaImage)
                 .addOnSuccessListener {
+                    Log.d("imgRecognitionSuccess", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
                     val result = recognizeText(it)
-                    Log.i("TextRecognizerFromImage", result.toString())
+                    Log.i("imgRecognitionSuccess", result.toString())
                 }
                 .addOnFailureListener {
+                    Log.d("imgRecognitionFailure", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
                     // Task failed with an exception
-                    Log.e("TextRecognizerFromImage", "Failed to processed $it", it)
+                    Log.e("imgRecognitionFailure", "Failed to processed $it", it)
                 }
     }
 

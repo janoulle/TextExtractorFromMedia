@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         textRecognizerTypeChosen.adapter = adapter
 
+        tweetIdField.setText(intent.getStringExtra(Constants.TWEET_ID) ?: "")
+
         // listener for spinner
         textRecognizerTypeChosen.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
