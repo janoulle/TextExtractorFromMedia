@@ -16,12 +16,12 @@ class TextRecognizerFromDocumentImpl : TextRecognizable {
                 .cloudDocumentTextRecognizer
         textRecognizer.processImage(mediaImage)
                 .addOnSuccessListener {
-                    Log.d("docRecognitionSuccess", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
+                    Log.i("docRecognitionSuccess", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
                     val result = recognizeText(it)
                     Log.i("docRecognitionSuccess", result.toString())
                 }
                 .addOnFailureListener {
-                    Log.d("docRecognitionFailure", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
+                    Log.i("docRecognitionFailure", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
                     Log.e("docRecognitionFailure", "Failed to process $it", it)
                 }
     }

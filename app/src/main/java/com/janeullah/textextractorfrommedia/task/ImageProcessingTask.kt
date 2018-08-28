@@ -5,8 +5,10 @@ import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.os.Looper
 import android.util.Log
+import android.widget.TextView
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.janeullah.textextractorfrommedia.R
 import com.janeullah.textextractorfrommedia.constants.RecognizableTypes
 import com.janeullah.textextractorfrommedia.data.TweetMediaText
 import com.janeullah.textextractorfrommedia.service.TextRecognizerFromDocumentImpl
@@ -20,7 +22,7 @@ class ImageProcessingTask(val context: WeakReference<Activity>, val recognizable
             val image = imageBitmaps[0]
             Log.i("imageProcessingAsync", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
             //todo: update UI thread with info
-            val activity = context.get()
+            val nullableActivity = context.get()
             image?.let {
                 val mediaImage: FirebaseVisionImage = FirebaseVisionImage.fromBitmap(image)
                 when (recognizableTypes) {
@@ -32,9 +34,14 @@ class ImageProcessingTask(val context: WeakReference<Activity>, val recognizable
                                     Log.i("docRecognitionSuccess", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
                                     val result = TextRecognizerFromDocumentImpl().recognizeText(success)
                                     Log.i("docRecognitionSuccess", result.toString())
+                                    nullableActivity?.let { activity ->
+                                        //todo: only works for one image at a time! Fix me
+                                        val textView: TextView = activity.findViewById(R.id.analyzedTweet)
+                                        textView.text = result.text
+                                    }
                                 }
                                 .addOnFailureListener {failure ->
-                                    Log.d("docRecognitionFailure", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
+                                    Log.i("docRecognitionFailure", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
                                     Log.e("docRecognitionFailure", "Failed to process $failure", failure)
                                 }
 
@@ -46,9 +53,14 @@ class ImageProcessingTask(val context: WeakReference<Activity>, val recognizable
                                     Log.i("imgRecognitionSuccess", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
                                     val result = TextRecognizerFromImageImpl().recognizeText(success)
                                     Log.i("imgRecognitionSuccess", result.toString())
+                                    nullableActivity?.let { activity ->
+                                        //todo: only works for one image at a time! Fix me
+                                        val textView: TextView = activity.findViewById(R.id.analyzedTweet)
+                                        textView.text = result.text
+                                    }
                                 }
                                 .addOnFailureListener {failure ->
-                                    Log.d("imgRecognitionFailure", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
+                                    Log.i("imgRecognitionFailure", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
                                     Log.e("imgRecognitionFailure", "Failed to process $failure", failure)
                                 }
                     }

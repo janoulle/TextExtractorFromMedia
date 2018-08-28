@@ -2,6 +2,7 @@ package com.janeullah.textextractorfrommedia.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import com.janeullah.textextractorfrommedia.BuildConfig
 import com.janeullah.textextractorfrommedia.R
@@ -14,6 +15,7 @@ import com.twitter.sdk.android.core.DefaultLogger
 import com.twitter.sdk.android.core.Twitter
 import com.twitter.sdk.android.core.TwitterAuthConfig
 import com.twitter.sdk.android.core.TwitterConfig
+import kotlinx.android.synthetic.main.activity_analyze_tweet.*
 import java.lang.ref.WeakReference
 
 
@@ -36,6 +38,7 @@ class AnalyzeTweetActivity : AppCompatActivity() {
         val tweetId = parseTweetId(intent.getStringExtra(TWEET_ID))
         val parseMode = getMatchingRecognizer(intent.getStringExtra(PARSE_MODE))
                 ?: RecognizableTypes.DOCUMENT
+        analyzedTweet.movementMethod = ScrollingMovementMethod()
 
         TweetAsyncTask(WeakReference(this), parseMode).execute(tweetId)
 

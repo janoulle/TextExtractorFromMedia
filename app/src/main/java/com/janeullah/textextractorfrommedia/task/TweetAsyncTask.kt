@@ -42,7 +42,7 @@ class TweetAsyncTask(val context: WeakReference<Activity>, val parseMode: Recogn
             val twitterApiClient = TwitterCore.getInstance().apiClient
             val statusesService = twitterApiClient.statusesService
 
-            Log.d("tweetAsyncTask", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
+            Log.i("tweetAsyncTask", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
             val call = statusesService.show(firstTweetId, null, null, null)
 
             val activity = context.get()

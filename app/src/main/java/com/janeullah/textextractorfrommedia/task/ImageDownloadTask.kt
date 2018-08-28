@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference
 class ImageDownloadTask(val context: WeakReference<Activity>) : AsyncTask<TextProcessingRequest, Void, Void>() {
 
     override fun doInBackground(vararg processingRequests: TextProcessingRequest?): Void? {
-        Log.d("imgDownloadTask", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
+        Log.i("imgDownloadTask", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
         val activity = context.get()
         activity?.let {
             Log.i("imgDownloadTask", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
