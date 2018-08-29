@@ -6,8 +6,8 @@ import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import com.janeullah.textextractorfrommedia.BuildConfig
 import com.janeullah.textextractorfrommedia.R
-import com.janeullah.textextractorfrommedia.constants.Constants.IntentNames.PARSE_MODE
-import com.janeullah.textextractorfrommedia.constants.Constants.IntentNames.TWEET_ID
+import com.janeullah.textextractorfrommedia.constants.IntentNames.PARSE_MODE
+import com.janeullah.textextractorfrommedia.constants.IntentNames.TWEET_ID
 import com.janeullah.textextractorfrommedia.constants.RecognizableTypes
 import com.janeullah.textextractorfrommedia.constants.getMatchingRecognizer
 import com.janeullah.textextractorfrommedia.task.TweetAsyncTask

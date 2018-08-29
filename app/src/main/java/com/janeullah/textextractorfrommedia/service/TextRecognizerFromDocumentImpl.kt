@@ -6,6 +6,7 @@ import android.util.Log
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText
+import com.janeullah.textextractorfrommedia.data.ImageInformation
 import com.janeullah.textextractorfrommedia.data.TweetMediaText
 
 
@@ -52,6 +53,6 @@ class TextRecognizerFromDocumentImpl : TextRecognizable {
                 }
             }
         }
-        return TweetMediaText(text = response.text);
+        return TweetMediaText(text = response.text, imageInfo = ImageInformation(imageUrl = "", maxWidth = 0, maxHeight = 0), bitMap = null)
     }
 }

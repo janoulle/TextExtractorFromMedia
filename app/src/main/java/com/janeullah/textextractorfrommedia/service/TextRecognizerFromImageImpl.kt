@@ -6,6 +6,7 @@ import android.util.Log
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionText
+import com.janeullah.textextractorfrommedia.data.ImageInformation
 import com.janeullah.textextractorfrommedia.data.TweetMediaText
 
 //todo: implement listener to update activity that cares about this response
@@ -50,6 +51,6 @@ class TextRecognizerFromImageImpl : TextRecognizable {
                 }
             }
         }
-        return TweetMediaText(text = response.text);
+        return TweetMediaText(text = response.text, imageInfo = ImageInformation(imageUrl = "", maxWidth = 0, maxHeight = 0), bitMap = null)
     }
 }

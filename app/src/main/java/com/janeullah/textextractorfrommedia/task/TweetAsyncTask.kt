@@ -7,7 +7,7 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import com.janeullah.textextractorfrommedia.activity.MainActivity
-import com.janeullah.textextractorfrommedia.constants.Constants
+import com.janeullah.textextractorfrommedia.constants.IntentNames
 import com.janeullah.textextractorfrommedia.constants.RecognizableTypes
 import com.janeullah.textextractorfrommedia.service.TweetProcessor
 import com.twitter.sdk.android.core.Callback
@@ -31,7 +31,7 @@ class TweetAsyncTask(val context: WeakReference<Activity>, val parseMode: Recogn
     fun displayErrorAndGoBack(tweetId: String, message: String, activity: Activity) {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
         val intent = Intent(activity, MainActivity::class.java).apply {
-            putExtra(Constants.TWEET_ID, tweetId)
+            putExtra(IntentNames.TWEET_ID, tweetId)
         }
         activity.startActivity(intent)
     }

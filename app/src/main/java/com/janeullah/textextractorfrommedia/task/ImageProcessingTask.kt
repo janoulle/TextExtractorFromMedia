@@ -10,14 +10,13 @@ import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.janeullah.textextractorfrommedia.R
 import com.janeullah.textextractorfrommedia.constants.RecognizableTypes
-import com.janeullah.textextractorfrommedia.data.TweetMediaText
 import com.janeullah.textextractorfrommedia.service.TextRecognizerFromDocumentImpl
 import com.janeullah.textextractorfrommedia.service.TextRecognizerFromImageImpl
 import java.lang.ref.WeakReference
 
 //processing the bitmap via firebase ml
-class ImageProcessingTask(val context: WeakReference<Activity>, val recognizableTypes: RecognizableTypes) : AsyncTask<Bitmap, Void, TweetMediaText>() {
-    override fun doInBackground(vararg imageBitmaps: Bitmap?): TweetMediaText {
+class ImageProcessingTask(val context: WeakReference<Activity>, val recognizableTypes: RecognizableTypes) : AsyncTask<Bitmap, Void, Void>() {
+    override fun doInBackground(vararg imageBitmaps: Bitmap?): Void? {
         if (!imageBitmaps.isEmpty()) {
             val image = imageBitmaps[0]
             Log.i("imageProcessingAsync", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
@@ -68,7 +67,7 @@ class ImageProcessingTask(val context: WeakReference<Activity>, val recognizable
             }
 
         }
-        return TweetMediaText()
+        return null
     }
 
 }
