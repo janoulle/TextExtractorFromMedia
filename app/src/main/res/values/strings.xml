@@ -5,9 +5,12 @@
     <string name="submit">Submit</string>
     <string name="tweetInputFieldHint">String must be a long</string>
     <string name="explainer">Enter a tweet id and choose the type of processing to perform on images associated to the tweet</string>
+    <string name="imageChoice">Image</string>
+    <string name="documentChoice">Document</string>
 
     <string-array name="textRecognizerTypes">
         <item>Document</item>
         <item>Image</item>
     </string-array>
+    <string name="title_activity_analyzed_image">AnalyzedImageActivity</string>
 </resources>
