@@ -1,31 +1,17 @@
 package com.janeullah.textextractorfrommedia.service
 
-import android.app.Activity
-import com.janeullah.textextractorfrommedia.constants.RecognizableTypes
 import com.janeullah.textextractorfrommedia.data.ImageInformation
-import com.janeullah.textextractorfrommedia.task.ImageDownloadTask
 import com.twitter.sdk.android.core.models.MediaEntity
-import java.lang.ref.WeakReference
 
 
+//https://medium.com/google-developer-experts/weakreference-in-android-dd1e66b9be9d
+//https://kotlinlang.org/docs/reference/classes.html
+//https://stackoverflow.com/questions/3243215/how-to-use-weakreference-in-java-and-android-development
+//https://stackoverflow.com/questions/46797916/this-field-leaks-a-context-object
+//https://github.com/facebook/facebook-android-sdk/blob/master/facebook-login/src/main/java/com/facebook/login/widget/ToolTipPopup.java
+//https://community.oracle.com/blogs/enicholas/2006/05/04/understanding-weak-references
+//https://stackoverflow.com/questions/3243215/how-to-use-weakreference-in-java-and-android-development
 class TweetProcessor {
-
-    fun processTweetMedia(mediaEntities: List<MediaEntity>, activity: Activity, recognizer: RecognizableTypes) {
-
-        for (mediaEntity: MediaEntity in mediaEntities) {
-
-            val imageUrl = mediaEntity.mediaUrlHttps
-            val maxHeight = mediaEntity.sizes.large.h
-            val maxWidth = mediaEntity.sizes.large.w
-
-            val processingRequest = TextProcessingRequest(
-                    ImageInformation(imageUrl = imageUrl, maxWidth = maxWidth, maxHeight = maxHeight),
-                    recognizer)
-            ImageDownloadTask(WeakReference(activity)).execute(processingRequest)
-
-        }
-
-    }
 
     //https://try.kotlinlang.org/#/Kotlin%20Koans/Collections/Filter%20map/Task.kt
     fun getMediaList(mediaEntities: List<MediaEntity>): ArrayList<ImageInformation> {

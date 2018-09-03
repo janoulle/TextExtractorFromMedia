@@ -13,7 +13,7 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.janeullah.textextractorfrommedia.R
 import com.janeullah.textextractorfrommedia.constants.IntentNames
 import com.janeullah.textextractorfrommedia.data.ImageInformation
-import com.janeullah.textextractorfrommedia.service.TextRecognizerFromImageImpl
+import com.janeullah.textextractorfrommedia.service.recognizeText
 import kotlinx.android.synthetic.main.activity_analyzed_image.*
 import kotlinx.android.synthetic.main.content_analyzed_image.*
 
@@ -41,7 +41,7 @@ class AnalyzedImageActivity : AppCompatActivity() {
             onDeviceTextRecognizer.processImage(mediaImage)
                     .addOnSuccessListener { success ->
                         Log.i("imgRecognitionSuccess", "In UI Thread ${Looper.myLooper() == Looper.getMainLooper()}")
-                        val result = TextRecognizerFromImageImpl().recognizeText(success)
+                        val result = recognizeText(success, tweetMediaItem)
                         Log.i("imgRecognitionSuccess", result.toString())
 
                         analyzedMediaImage.text = result.text

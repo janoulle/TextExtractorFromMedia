@@ -55,9 +55,11 @@ class MainActivity : AppCompatActivity() {
 
         //listener for clicks on the submit button
         submitTweetId.setOnClickListener {
+            submitTweetId.isEnabled = false
             val tweetId = tweetIdField.text.toString()
             if (!isValidTweetId(tweetId)) {
                 Toast.makeText(this@MainActivity, "Please enter a valid tweet id!", Toast.LENGTH_LONG).show()
+                submitTweetId.isEnabled = true
             } else {
                 /*val intent = Intent(this@MainActivity, AnalyzeTweetActivity::class.java).apply {
                     putExtra(Constants.TWEET_ID, tweetIdField.text.toString())
@@ -92,8 +94,9 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun failure(exception: TwitterException?) {
+                        submitTweetId.isEnabled = true
                         Log.e("tweetCallFailure", "Failed to fetch tweet by $tweetId", exception)
-                        Toast.makeText(this@MainActivity, "Error fetching tweet id $tweetId", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@MainActivity, "Error fetching tweet id $tweetId with message: ${exception?.message}", Toast.LENGTH_LONG).show()
                         //indeterminateBar.visibility = ProgressBar.INVISIBLE
 
                     }
