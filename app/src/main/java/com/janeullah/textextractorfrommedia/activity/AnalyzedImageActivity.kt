@@ -25,7 +25,6 @@ class AnalyzedImageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_analyzed_image)
         setSupportActionBar(toolbar)
 
-        //todo: display app name on toolbar
         //https://developer.android.com/training/data-storage/files#OpenFileInternal
         val tweetMediaItem = intent.getParcelableExtra<ImageInformation>(IntentNames.TWEET_MEDIA_ITEM)
 

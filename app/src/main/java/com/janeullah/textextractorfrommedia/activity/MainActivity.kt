@@ -8,9 +8,6 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.janeullah.textextractorfrommedia.BuildConfig
 import com.janeullah.textextractorfrommedia.R
@@ -23,7 +20,6 @@ import kotlinx.android.synthetic.main.content_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    var typeSelected = "document"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,22 +32,7 @@ class MainActivity : AppCompatActivity() {
                 .build()
         Twitter.initialize(config)
 
-        val adapter = ArrayAdapter.createFromResource(this,
-                R.array.textRecognizerTypes, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        textRecognizerTypeChosen.adapter = adapter
-
         tweetIdField.setText(intent.getStringExtra(IntentNames.TWEET_ID) ?: "")
-
-        // listener for spinner
-        textRecognizerTypeChosen.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                typeSelected = parent?.getItemAtPosition(position)?.toString() ?: "document"
-            }
-        }
 
         //listener for clicks on the submit button
         submitTweetId.setOnClickListener {
@@ -86,7 +67,6 @@ class MainActivity : AppCompatActivity() {
 
                             val intent = Intent(this@MainActivity, DisplayTweetImages::class.java).apply {
                                 putExtra(IntentNames.TWEET_ID, tweetIdField.text.toString())
-                                putExtra(IntentNames.PARSE_MODE, typeSelected)
                                 putParcelableArrayListExtra(IntentNames.TWEET_MEDIA_LIST, TweetProcessor().getMediaList(mediaEntities))
                             }
                             startActivity(intent)
@@ -119,6 +99,11 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onResume() {
+        submitTweetId.isEnabled = true
+        super.onResume()
     }
 
     private fun isValidTweetId(tweetId: String?): Boolean {

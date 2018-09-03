@@ -37,12 +37,6 @@ class ImageViewAdapter(private val activity: Activity, private var tweetMedia: A
         return ImageViewHolder(view)
     }
 
-    fun setTweetMedia(mediaItems: ArrayList<ImageInformation>) {
-        tweetMedia = mediaItems
-        notifyDataSetChanged()
-    }
-
-
     override fun getItemCount(): Int {
         return tweetMedia.size
     }
@@ -101,7 +95,7 @@ class ImageViewAdapter(private val activity: Activity, private var tweetMedia: A
                 tweetMediaItem.cachedAbsolutePath = file.absolutePath ?: ""
 
                 val intent = Intent(activity, AnalyzedImageActivity::class.java).apply {
-                    putExtra(IntentNames.PARSE_MODE, RecognizableTypes.DOCUMENT.text)
+                    putExtra(IntentNames.PARSE_MODE, RecognizableTypes.IMAGE.text)
                     putExtra(IntentNames.TWEET_MEDIA_ITEM, tweetMediaItem)
                 }
                 activity.startActivity(intent)
