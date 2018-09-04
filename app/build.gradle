@@ -20,6 +20,7 @@ def twttr = getTwitterKeys()
 android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion '28.0.2'
 
     androidExtensions {
         experimental = true
@@ -131,5 +132,7 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espressoVersion"
 
 }
+
+//https://github.com/robolectric/robolectric-samples/blob/master/android-api-21/build.gradle
 
 apply plugin: 'com.google.gms.google-services'

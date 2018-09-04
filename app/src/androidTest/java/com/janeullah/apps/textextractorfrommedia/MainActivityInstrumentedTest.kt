@@ -4,6 +4,8 @@ package com.janeullah.apps.textextractorfrommedia
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.*
+import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.RootMatchers.withDecorView
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
@@ -17,6 +19,7 @@ import com.janeullah.textextractorfrommedia.activity.MainActivity
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Assert.assertEquals
 import org.junit.Ignore
@@ -24,9 +27,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+
 /**
  * Instrumented test, which will execute on an Android device.
- *
+ * https://fernandocejas.com/2017/02/03/android-testing-with-kotlin/
+ * https://android.jlelse.eu/robolectric-unit-testing-framework-for-android-b78ebac0b411
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
@@ -62,8 +67,8 @@ class MainActivityInstrumentedTest {
     }
 
     //https://stackoverflow.com/questions/29945087/kotlin-and-new-activitytestrule-the-rule-must-be-public
-    @Rule @JvmField
-    var mNotesActivityTestRule = ActivityTestRule(MainActivity::class.java)
+    //https://kotlinlang.org/docs/reference/annotations.html#java-annotations
+    @get:Rule var mMainActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
     fun useAppContext() {
@@ -72,16 +77,19 @@ class MainActivityInstrumentedTest {
         assertEquals("com.janeullah.textextractorfrommedia", appContext.packageName)
     }
 
-    @Ignore("TODO: mock the api calls")
+    @Ignore("Figure out how to test the toast")
     @Test
-    fun enterTweetId() {
+    fun enterTweetId_NonNumericValue() {
+        var errorMessage = "Please enter a valid tweet id!"
         //enter tweet id
-        onView(withId(R.id.tweetIdField)).perform(typeText("1027598458746593280"), closeSoftKeyboard())
+        onView(withId(R.id.tweetIdField)).perform(typeText("abcde"), closeSoftKeyboard())
 
         //click submit tweet button
         onView(withId(R.id.submitTweetId)).perform(click())
 
-        //verify next activity is launched
+        //verify toast with error message is displayed
+        onView(withText(errorMessage)).inRoot(withDecorView(not(mMainActivityTestRule.activity.window.decorView))).check(matches(isDisplayed()))
     }
 
 }
+

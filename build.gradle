@@ -8,8 +8,9 @@ buildscript {
         targetSdkVersion = 27
         compileSdkVersion = 27
         kotlinVersion = '1.2.61'
+        buildToolsVersion = '28.0.2'
         gradleBuildToolVersion = "3.2.0-rc02"
-        //buildToolsVersion = '23.0.3'
+
 
         // App dependencies
         guavaVersion = '26.0-android'
