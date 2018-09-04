@@ -21,6 +21,27 @@ import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
+
+    private fun extractTweetIdFromUrl(intent: Intent): String {
+        intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
+            Log.i("tweetShared", it)
+            //https://gist.github.com/gruber/8891611
+            //https://daringfireball.net/2010/07/improved_regex_for_matching_urls
+            val regex = """
+(?i)\b((?:https?:(?:/{1,3}|[a-z0-9%])|[a-z0-9.\-]+[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|dd|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)/)(?:[^\s()<>{}\[\]]+|\([^\s()]*?\([^\s()]+\)[^\s()]*?\)|\([^\s]+?\))+(?:\([^\s()]*?\([^\s()]+\)[^\s()]*?\)|\([^\s]+?\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’])|(?:(?<!@)[a-z0-9]+(?:[.\-][a-z0-9]+)*[.](?:com|net|org|edu|gov|mil|aero|asia|biz|cat|coop|info|int|jobs|mobi|museum|name|post|pro|tel|travel|xxx|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cs|cu|cv|cx|cy|cz|dd|de|dj|dk|dm|do|dz|ec|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|Ja|sk|sl|sm|sn|so|sr|ss|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)\b/?(?!@)))
+            """.trimIndent().toRegex()
+            regex.find(it)?.let {
+                //match digits in the url (not very robust....)
+                //shared tweet url pattern - https://twitter.com/user/status/10000000000000000001?s=09
+                val digitFinder = "\\d+".toRegex()
+                val extractedTweetId = digitFinder.find(it.value)?.groups?.get(0)?.value.toString()
+                Log.i("extractedTweetId", extractedTweetId)
+                return extractedTweetId
+            }
+        }
+        return ""
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,7 +53,6 @@ class MainActivity : AppCompatActivity() {
                 .build()
         Twitter.initialize(config)
 
-        tweetIdField.setText(intent.getStringExtra(IntentNames.TWEET_ID) ?: "")
 
         //listener for clicks on the submit button
         submitTweetId.setOnClickListener {
@@ -78,6 +98,24 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         }
+
+        //check the intent launching this activity
+        when {
+            //when data is sent to this activity from another app
+            intent.action == Intent.ACTION_SEND -> {
+                if ("text/plain" == intent.type) {
+                    val tweetIdVar = extractTweetIdFromUrl(intent)
+                    tweetIdField.setText(tweetIdVar)
+                    submitTweetId.performClick()
+                }
+            }
+            //app launched via 'normal' means
+            else -> {
+                val tweetIdVar = intent.getStringExtra(IntentNames.TWEET_ID) ?: ""
+                tweetIdField.setText(tweetIdVar)
+            }
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -97,8 +135,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        submitTweetId.isEnabled = true
         super.onResume()
+        submitTweetId.isEnabled = true
     }
 
     private fun isValidTweetId(tweetId: String?): Boolean {

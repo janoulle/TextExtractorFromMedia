@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/analyzed_image_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.AnalyzedImageActivity"
     tools:showIn="@layout/activity_analyzed_image">
@@ -12,7 +13,6 @@
         android:id="@+id/analyzedMediaImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="" />
+        android:textIsSelectable="true" />
 
 </android.support.v4.widget.NestedScrollView>
