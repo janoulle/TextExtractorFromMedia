@@ -2,6 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.janeullah.textextractorfrommedia.MainActivity">
+    <!--https://developer.android.com/training/appbar/actions-->
+    <!--The app:showAsAction attribute specifies whether the action should be shown as a button on the app bar.
+    If you set app:showAsAction="ifRoom" (as in the example code's favorite action), the action is displayed as a button
+    if there is room in the app bar for it; if there is not enough room, excess actions are sent to the overflow menu.
+    If you set app:showAsAction="never" (as in the example code's settings action), the action is always listed in the overflow menu,
+    not displayed in the app bar.-->
+    <!-- Settings, should always be in the overflow -->
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

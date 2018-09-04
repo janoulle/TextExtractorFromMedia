@@ -42,7 +42,7 @@ class ImageViewAdapter(private val activity: Activity, private var tweetMedia: A
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        val tweetMediaItem = tweetMedia.get(position)
+        val tweetMediaItem = tweetMedia[position]
 
         //https://github.com/TWiStErRob/glide-support/blob/master/src/glide4/java/com/bumptech/glide/supportapp/random/__quicky/QuickFragment.java
         //https://github.com/bumptech/glide/wiki/Custom-targets
@@ -97,6 +97,7 @@ class ImageViewAdapter(private val activity: Activity, private var tweetMedia: A
                 val intent = Intent(activity, AnalyzedImageActivity::class.java).apply {
                     putExtra(IntentNames.PARSE_MODE, RecognizableTypes.IMAGE.text)
                     putExtra(IntentNames.TWEET_MEDIA_ITEM, tweetMediaItem)
+                    putParcelableArrayListExtra(IntentNames.TWEET_MEDIA_LIST, tweetMedia)
                 }
                 activity.startActivity(intent)
 

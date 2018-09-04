@@ -42,11 +42,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "Please enter a valid tweet id!", Toast.LENGTH_LONG).show()
                 submitTweetId.isEnabled = true
             } else {
-                /*val intent = Intent(this@MainActivity, AnalyzeTweetActivity::class.java).apply {
-                    putExtra(Constants.TWEET_ID, tweetIdField.text.toString())
-                    putExtra(Constants.PARSE_MODE, typeSelected)
-                }
-                startActivity(intent)*/
 
                 val twitterApiClient = TwitterCore.getInstance().apiClient
                 val statusesService = twitterApiClient.statusesService
@@ -67,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
                             val intent = Intent(this@MainActivity, DisplayTweetImages::class.java).apply {
                                 putExtra(IntentNames.TWEET_ID, tweetIdField.text.toString())
-                                putParcelableArrayListExtra(IntentNames.TWEET_MEDIA_LIST, TweetProcessor().getMediaList(mediaEntities))
+                                putParcelableArrayListExtra(IntentNames.TWEET_MEDIA_LIST, TweetProcessor(tweetIdField.text.toString()).getMediaList(mediaEntities))
                             }
                             startActivity(intent)
                         }
