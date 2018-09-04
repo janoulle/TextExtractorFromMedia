@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                         val mediaEntities = result?.data?.extendedEntities?.media ?: listOf()
 
                         if (mediaEntities.isEmpty()) {
+                            submitTweetId.isEnabled = true
                             Toast.makeText(this@MainActivity, "This tweet id ($tweetId) does not have any embedded media objects", Toast.LENGTH_LONG).show()
                         } else {
 
