@@ -80,10 +80,9 @@ class MainActivity : AppCompatActivity() {
                             submitTweetId.isEnabled = true
                             Toast.makeText(this@MainActivity, "This tweet id ($tweetId) does not have any embedded media objects", Toast.LENGTH_LONG).show()
                         } else {
-
                             val intent = Intent(this@MainActivity, DisplayTweetImages::class.java).apply {
                                 putExtra(IntentNames.TWEET_ID, tweetIdField.text.toString())
-                                putParcelableArrayListExtra(IntentNames.TWEET_MEDIA_LIST, TweetProcessor(tweetIdField.text.toString()).getMediaList(mediaEntities))
+                                putParcelableArrayListExtra(IntentNames.TWEET_MEDIA_LIST, ArrayList(TweetProcessor(tweetIdField.text.toString()).getMediaList(mediaEntities)))
                             }
                             startActivity(intent)
                         }

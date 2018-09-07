@@ -22,7 +22,6 @@ import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Assert.assertEquals
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -77,10 +76,9 @@ class MainActivityInstrumentedTest {
         assertEquals("com.janeullah.textextractorfrommedia", appContext.packageName)
     }
 
-    @Ignore("Figure out how to test the toast")
     @Test
     fun enterTweetId_NonNumericValue() {
-        var errorMessage = "Please enter a valid tweet id!"
+        val errorMessage = "Please enter a valid tweet id!"
         //enter tweet id
         onView(withId(R.id.tweetIdField)).perform(typeText("abcde"), closeSoftKeyboard())
 
