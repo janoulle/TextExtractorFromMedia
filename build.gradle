@@ -17,6 +17,7 @@ buildscript {
         supportLibraryVersion = '27.1.1'
         glideVersion = '4.8.0'
         junitVersion = '4.12'
+        mockitoVersion = '2.15.0'
         assertJVersion = '3.9.1'
         mockitoVersion = '1.10.19'
         powerMockito = '1.6.2'

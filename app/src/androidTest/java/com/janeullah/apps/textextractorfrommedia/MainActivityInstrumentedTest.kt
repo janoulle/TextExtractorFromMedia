@@ -29,6 +29,8 @@ import org.junit.runner.RunWith
 
 /**
  * Instrumented test, which will execute on an Android device.
+ * https://github.com/googlesamples/android-testing
+ * https://github.com/googlesamples/android-testing/tree/master/ui/espresso/CustomMatcherSample
  * https://fernandocejas.com/2017/02/03/android-testing-with-kotlin/
  * https://android.jlelse.eu/robolectric-unit-testing-framework-for-android-b78ebac0b411
  * See [testing documentation](http://d.android.com/tools/testing).
@@ -88,6 +90,7 @@ class MainActivityInstrumentedTest {
         //verify toast with error message is displayed
         onView(withText(errorMessage)).inRoot(withDecorView(not(mMainActivityTestRule.activity.window.decorView))).check(matches(isDisplayed()))
     }
+
 
 }
 

@@ -107,7 +107,9 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
     //https://developer.android.com/training/testing/junit-runner
+    //https://developer.android.com/training/testing/unit-testing/local-unit-tests#mocking-dependencies
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.assertj:assertj-core:$assertJVersion"
 
     // Optional -- Hamcrest library
